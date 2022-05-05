@@ -6,6 +6,10 @@ This is Terraform template to launch front end instance!
 
 conda create --name terraform
 
+#### Activate env.:
+
+conda activate terraform
+
 #### Install terraform:
 conda install -c conda-forge terraform
 
