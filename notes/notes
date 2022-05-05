@@ -1,0 +1,75 @@
+#Install in vscode terrform atttacthments - highlighters etc
+#install in awsEnv conda env terraform:
+
+conda install -c conda-forge terraform
+
+terraform version
+terraform init
+
+#To see what will be deployed
+terrafor plan
+
+#To deploy
+terraform apply
+
+#To see the state list (what has been deployed)
+terraform state list
+#Prints: aws_vpc.front_vpc
+
+terraform state show aws_vpc.front_vpc
+#It shows all the info about vpc i deployed
+
+terraform show 
+#will print every resource
+[<<<<terraform state list; terraform state show aws_vpc.front_vpc>>>>]
+
+
+terraform destroy -auto-approve
+
+
+2. Adding resource 2-> public subnet:
+
+"""
+resource "aws_subnet" "front_vpc" {
+  vpc_id     = aws_vpc.main.id
+  cidr_block = "10.0.1.0/24"
+
+  tags = {
+    Name = "Main"
+  }
+}
+"""
+
+#how to get id of <aws_vpc.front_vpc.id>:
+
+#See teh resources
+terraform state list
+#it wil print this:
+<aws_vpc.front_vpc>
+jsut add <.id>
+
+#or we can see the id attribute straight from this:
+terraform state show aws_vpc.front_vpc
+#It will show: id                               = "vpc-033fdf74867ad8135", along with other vpc attributes
+
+
+3 font corection:
+
+terraform fmt
+#corrects all the fonts, makes text looks good etc.
+
+4. Keygen generate in terminal:
+
+ssh-keygen -t ed25519
+#Generating public/private ed25519 key pair.
+#Enter file in which to save the key (/home/yogender/.ssh/id_ed25519): /home/yogender/.ssh/frontkey
+>>/home/yogender/.ssh/YourKeyName   
+##rename 
+
+#to see the key;
+ls ~/.ssh
+
+
+4 to apply changes in provisons in instance:
+terraform apply -replace aws_instance.dev_node
+
