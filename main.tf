@@ -12,7 +12,7 @@ resource "aws_subnet" "front_vpc_public_subnet" {
   vpc_id                  = aws_vpc.front_vpc.id
   cidr_block              = "10.123.1.0/24"
   map_public_ip_on_launch = true
-  availability_zone       = "us-west-2a"
+  availability_zone       = "eu-central-1a"
   tags = {
     Name = "dev_public_subnet"
   }
@@ -66,31 +66,16 @@ resource "aws_security_group" "front_sg" {
   }
 }
 
-resource "aws_key_pair" "front_auth" {
-  key_name   = "front-key"
-  public_key = file("~/.ssh/frontkey.pub")
-}
+
 
 resource "aws_instance" "dev_node" {
   ami                    = data.aws_ami.server_ami.id
   instance_type          = "t2.micro"
-  key_name               = aws_key_pair.front_auth.id
   vpc_security_group_ids = [aws_security_group.front_sg.id]
   subnet_id              = aws_subnet.front_vpc_public_subnet.id
-  user_data              = file("userdata.tpl")
 
-  root_block_device {
-    volume_size = 10
-  }
 
   tags = {
     Name = "front_instance"
-  }
-  provisioner "local-exec" {
-    command = templatefile("linux-ssh-config.tpl", {
-      hostname     = self.public_ip
-      user         = "ubuntu"
-      identityfile = "~/.ssh/frontkey"
-    })
   }
 }

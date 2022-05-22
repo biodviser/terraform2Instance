@@ -1,10 +1,9 @@
 data "aws_ami" "server_ami" {
   most_recent = true
-  owners      = ["099720109477"]
+  owners      = ["636521895949"]
 
   filter {
-    name   = "name"
-    values = ["ubuntu/images/hvm-ssd/ubuntu-bionic-18.04-amd64-server-*"]
+    name   = "image-id"
+    values = ["ami-055232d90e0f3c7cc"]
   }
-
 }
