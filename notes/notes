@@ -7,7 +7,7 @@ terraform version
 terraform init
 
 #To see what will be deployed
-terrafor plan
+terraform plan
 
 #To deploy
 terraform apply
