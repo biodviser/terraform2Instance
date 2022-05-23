@@ -55,7 +55,7 @@ resource "aws_security_group" "front_sg" {
     from_port   = 0
     to_port     = 0
     protocol    = "-1"
-    cidr_blocks = ["147.32.98.207/32"]
+    cidr_blocks = ["147.32.98.207/32", "147.32.99.76/32"]
   }
 
   egress {
@@ -66,6 +66,30 @@ resource "aws_security_group" "front_sg" {
   }
 }
 
+resource "aws_default_network_acl" "default" {
+  default_network_acl_id = aws_vpc.front_vpc.default_network_acl_id
+
+  ingress {
+    protocol   = -1
+    rule_no    = 100
+    action     = "allow"
+    cidr_block = "147.32.99.76/32"
+    from_port  = 0
+    to_port    = 0
+  }
+
+  egress {
+    protocol   = -1
+    rule_no    = 100
+    action     = "allow"
+    cidr_block = "0.0.0.0/0"
+    from_port  = 0
+    to_port    = 0
+  }
+    tags = {
+      Name = "default_nacl"
+  }
+}
 
 
 resource "aws_instance" "dev_node" {
