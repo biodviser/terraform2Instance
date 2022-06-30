@@ -4,6 +4,6 @@ data "aws_ami" "server_ami" {
 
   filter {
     name   = "image-id"
-    values = ["ami-055232d90e0f3c7cc"]
+    values = ["ami-017eb6ca4f4697c57"]
   }
 }
