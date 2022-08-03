@@ -55,7 +55,7 @@ resource "aws_security_group" "front_sg" {
     from_port   = 0
     to_port     = 0
     protocol    = "-1"
-    cidr_blocks = ["147.32.98.207/32", "147.32.99.76/32"]
+    cidr_blocks = ["0.0.0.0/0"]
   }
 
   egress {
